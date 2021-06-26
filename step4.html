@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Experiment</title>
+      <link rel="stylesheet" href="./main.css">
+    </head>
+    <body>
+      <div id="main">
+        <h1 style="color: purple;">This is working so nicely</h1>
+        <p style="color: orange;">You are new paragrarph now</p>
+      </div>
+      <div class="sidebar">
+        <button id="iAmFeelingLucky">I am feeling lucky</button>
+        <div class="form-field">
+          <label for="text">Text</label>
+          <input type="text" id="innerTextInputElem" value="">
+        </div>
+
+        <div class="form-field">
+          <label for="color">Color</label>
+          <input type="text" id="colorValueInputElem" value="">
+        </div>
+      </div>
+
+      <script>
+        const syncChanges = () => {
+          fetch("http://localhost:3000", {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              code: document.documentElement.innerHTML,
+              filename: "step4"
+            })
+          });
+        };
+
+        const mainElem = document.getElementById("main");
+        const innerTextInputElem = document.getElementById("innerTextInputElem");
+        const colorValueInputElem = document.getElementById("colorValueInputElem");
+
+        let handleInnerTextChange = () => { };
+        let handleColorChange = () => { };
+
+        mainElem.addEventListener("click", (e) => {
+          // e.preventDefault();
+          // e.stopPropagation();
+          cleanAllInputListensers();
+
+          const elem = e.target;
+
+          handleInnerTextChange = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            elem.innerText = e.target.value;
+            syncChanges();
+          };
+          handleColorChange = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            elem.style.color = e.target.value;
+            syncChanges();
+          };
+
+          innerTextInputElem.value = elem.innerText;
+          colorValueInputElem.value = elem.style.color;
+
+          innerTextInputElem.addEventListener("input", handleInnerTextChange);
+          colorValueInputElem.addEventListener("input", handleColorChange);
+        });
+
+        function cleanAllInputListensers() {
+          innerTextInputElem.removeEventListener("input", handleInnerTextChange);
+          colorValueInputElem.removeEventListener("input", handleColorChange);
+        }
+
+        document.getElementById("iAmFeelingLucky").addEventListener("click", (e) => {
+          console.log('HERE');
+          e.preventDefault();
+          e.stopPropagation();
+          if(e.target.getAttribute("id") !== "iAmFeelingLucky") return;
+          let tagName = prompt("Choose a tag to insert in the page");
+          if (tagName != null) {
+            let elem = document.createElement(tagName);
+
+            if (tagName === "div") {
+              elem.innerHTML = `
+                  <marquee direction="down" width="250" height="200" behavior="alternate" style="border:solid">
+                    <marquee behavior="alternate">
+                      This text will bounce
+                    </marquee>
+                  </marquee>
+                `;
+            }
+            document.getElementById("main").appendChild(elem);
+          }
+          syncChanges();
+        });
+      </script>
+  </body>
+</html>

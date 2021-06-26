@@ -1,0 +1,27 @@
+{
+  "name": "UiDevToolsHack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vipulbhj/UiDevToolHack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vipulbhj/UiDevToolHack/issues"
+  },
+  "homepage": "https://github.com/vipulbhj/UiDevToolHack#readme",
+  "dependencies": {
+    "nraf": "^1.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
